@@ -35,5 +35,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-standard": "^4.1.0",
     "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "pg": "^8.5.1"
   }
 }
