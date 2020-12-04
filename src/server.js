@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+// import router from './routes/auth.route';
 import { config } from 'dotenv';
 import routes from './routes';
 import ResponseService from './services/response.service';
