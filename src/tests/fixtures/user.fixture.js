@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const user = {
 	fullname: 'Alan Shearer',
 	email: 'tigthor1337@gmail.com',
