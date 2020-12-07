@@ -16,5 +16,9 @@ before_script:
 script:
   - npm test
 after_success:
+<<<<<<< HEAD
   - npm run coverage
   
+=======
+  - npm run coverage
+>>>>>>> cd8487076018c7692c139b57a7f02298cd92e38b

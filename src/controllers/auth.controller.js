@@ -10,11 +10,10 @@ import UserService from '../services/user.service';
  */
 class AuthController {
 	/**
-	 * @param {object} req
-	 * @param {object} res
-	 * @returns {object} this is going to create a user
-	 */
-
+   * @param {object} req
+   * @param {object} res
+   * @return {object} this is going to create a user
+   */
 	static async signup(req, res) {
 		const newUser = await UserService.createUser({
 			fullname: req.body.fullname,
@@ -26,9 +25,13 @@ class AuthController {
 			country: req.body.country,
 			city: req.body.city,
 		});
-		MailService.sendMail(req.body.fullname, req.body.email, TokenService.generateToken({
-			email: req.body.email
-		}));
+		MailService.sendMail(
+			req.body.fullname,
+			req.body.email,
+			TokenService.generateToken({
+				email: req.body.email,
+			})
+		);
 
 		ResponseService.setSuccess(201, 'User Successfully Created', {
 			id: newUser.id,
@@ -42,8 +45,24 @@ class AuthController {
 			profilePicture: newUser.profilePicture,
 			role: newUser.role,
 			createdAt: newUser.createdAt,
-			updatedAt: newUser.updatedAt
+			updatedAt: newUser.updatedAt,
 		});
+		return ResponseService.send(res);
+	}
+
+	/**
+   * @param {object} req
+   * @param {object} res
+   * @return {object} this is going get a social media user
+   */
+	static async loginWithSocialMedia(req, res) {
+		const user = await UserService.findUserByAttribute({
+			email: req.user.email,
+		});
+		const token = TokenService.generateToken({
+			id: user.id,
+		});
+		ResponseService.setSuccess(200, 'you have successful logged in', token);
 		return ResponseService.send(res);
 	}
 }
