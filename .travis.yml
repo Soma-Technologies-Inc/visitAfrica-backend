@@ -1,21 +1,18 @@
- 
+sudo: false
+
 language: node_js
 node_js:
-  - "stable"
+  - 'stable'
 install:
-  - npm i
-cache:
-  directories:
-    - node_modules
+  - npm install
+
+notifications:
+  email: false
 services:
   - postgresql
-addons:
-  postgresql: "9.4"
 before_script:
-  - psql -c "CREATE DATABASE visitafrica;" -U postgres
-  - npm run migrate
+  - psql -c 'create database visitAfrica_test;' -U postgres
 script:
-  - npm test
+  - npm run test
 after_success:
-
   - npm run coverage
