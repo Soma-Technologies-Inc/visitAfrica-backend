@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 	}, {});
 	trips.associate = (models) => {
 		trips.belongsTo(
-			models.user,
+			models.User,
 			{ foreignKey: 'userId' },
 			{ onDelete: 'cascade' },
 			{ onUpdate: 'cascade' }
