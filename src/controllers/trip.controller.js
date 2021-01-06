@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import ResponseService from '../services/response.service';
 import TripService from '../services/trip.service';
 
@@ -71,6 +72,35 @@ class TripController {
 		ResponseService.setSuccess(
 			201,
 			'Trip request is successfully created',
+			newTrip
+		);
+		return ResponseService.send(res);
+	}
+
+	/**
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {Object} Notify for the approved request
+*/
+	static async approveRequest(req, res) {
+		const updatedTravelObj = await approveTravel(req.params.travel_id);
+		const updatedTravel = updatedTravelObj[1][0];
+
+		const notificationObj = await createNotification({
+			recipient_id: updatedTravel.user_id,
+			travel_id: updatedTravel.id,
+			message: message.notificationMessage(
+				updatedTravel.createdAt,
+				updatedTravel.origin,
+			)
+		});
+		const notificationMessage = notificationObj.dataValues;
+
+		// delete notificationMessage.recipient_id;
+		notificationMessage.title = 'Approved Travel Request.';
+		ResponseService.setSuccess(
+			201,
+			'Trip request has been approved',
 			newTrip
 		);
 		return ResponseService.send(res);
