@@ -12,3 +12,6 @@ export const fakeTrip = {
 	startingDate: '2020-12-10',
 	returningDate: '2020-12-02',
 };
+export const approveRequest = {
+	status: 'approved'
+};

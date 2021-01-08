@@ -54,5 +54,12 @@ router.patch(
 	checkLocation,
 	TripController.updateInfoTrip
 );
+router.patch(
+	'/editstatus/:id',
+	protectRoute,
+	TripController.updateTripStatus,
+	checkLocation,
+	TripController.updateInfoTrip
+);
 
 export default router;

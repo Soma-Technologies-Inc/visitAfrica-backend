@@ -1,5 +1,6 @@
 import ResponseService from '../services/response.service';
 import TripService from '../services/trip.service';
+import NotificationService from '../services/notification.service';
 
 /**
  * thuuu
@@ -51,6 +52,34 @@ class TripController {
 			}
 		);
 		ResponseService.setSuccess(200, 'Trip info updated successfully');
+		return ResponseService.send(res);
+	}
+
+	/**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} uf
+   */
+	static async updateTripStatus(req, res) {
+		await TripService.updateTripByAttribute(
+			{ id: req.params.id },
+			{
+				departureFrom: req.body.departureFrom,
+				departureTo: req.body.departureTo,
+				startingDate: req.body.startingDate,
+				returningDate: req.body.returningDate,
+				reason: req.body.reason,
+				status: req.body.status,
+			}
+		);
+		await NotificationService.createNotification({
+			userId: req.userData.id,
+			message: `trip status with id ${req.params.id} has been approved`,
+			isRead: false,
+			requestId: req.params.id
+		});
+		ResponseService.setSuccess(200, 'Tripstatus info updated successfully');
 		return ResponseService.send(res);
 	}
 
